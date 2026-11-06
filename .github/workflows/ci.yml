@@ -1,0 +1,81 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      evals_llm:
+        description: "Rodar tambem os evals com LLM (usa o secret ANTHROPIC_API_KEY)"
+        type: boolean
+        default: false
+      k:
+        description: "Execucoes por caso nos evals com LLM (pass^k)"
+        default: "3"
+
+permissions:
+  contents: read
+
+jobs:
+  offline:
+    name: typecheck + selftest + gates + evals offline
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npm run tools
+      - run: npm run selftest
+      - name: gates (cada um normal E --known-bad)
+        run: npm run gates
+      - name: evals offline (pass^3)
+        run: npm run evals:offline -- --k 3
+      - name: evals offline known-bad (tem de reprovar)
+        run: npm run evals:offline:known-bad
+      - name: nenhum CNPJ/CPF com digito valido no repo
+        run: npm run documentos
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: resultados
+          path: resultados/
+
+  evals-llm:
+    name: evals com LLM (opcional)
+    if: github.event_name == 'workflow_dispatch' && inputs.evals_llm
+    needs: offline
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run evals:llm -- --k ${{ inputs.k }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evals-llm
+          path: resultados/evals-llm.json
+
+  segredos:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

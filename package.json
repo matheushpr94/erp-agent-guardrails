@@ -1,0 +1,43 @@
+{
+  "name": "erp-agent-guardrails",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Servidor MCP + agente LLM que opera um ERP financeiro so com proposta e confirmacao humana. Versao publica com ERP simulado.",
+  "license": "MIT",
+  "author": "Matheus Rosa",
+  "type": "module",
+  "engines": {
+    "node": ">=20.12"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "mock": "tsx mock-erp/server.ts",
+    "start": "node dist/src/index.js",
+    "dev": "tsx src/index.ts",
+    "tools": "tsx scripts/tools.ts",
+    "selftest": "tsx scripts/mcp-selftest.ts",
+    "gate:escrita": "tsx scripts/gates/escrita-gate.ts",
+    "gate:proposta": "tsx scripts/gates/proposta-gate.ts",
+    "gate:papel": "tsx scripts/gates/papel-gate.ts",
+    "gate:confirmacao": "tsx scripts/gates/confirmacao-gate.ts",
+    "gate:integracao": "tsx scripts/gates/integracao-gate.ts",
+    "gates": "tsx scripts/gates/rodar-todos.ts",
+    "evals:offline": "tsx scripts/evals/offline.ts",
+    "evals:llm": "tsx scripts/evals/llm.ts",
+    "evals:offline:known-bad": "tsx scripts/evals/offline.ts --known-bad",
+    "documentos": "tsx scripts/verificar-documentos.ts",
+    "agente": "tsx agente/chat.ts",
+    "ci": "npm run typecheck && npm run build && npm run selftest && npm run gates && npm run evals:offline && npm run evals:offline:known-bad && npm run documentos"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.6.0",
+    "@modelcontextprotocol/sdk": "~1.30.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

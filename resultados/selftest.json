@@ -1,0 +1,21 @@
+{
+  "gerado_em": "2026-11-06T01:45:18.538Z",
+  "tools": 10,
+  "leitura": [
+    "consultar_saldo",
+    "listar_contas_a_pagar",
+    "listar_contas_a_receber",
+    "consultar_parcela",
+    "listar_clientes",
+    "listar_categorias"
+  ],
+  "propostas": [
+    "propor_lancar_conta",
+    "propor_dar_baixa",
+    "propor_criar_cliente"
+  ],
+  "executores": [
+    "confirmar_acao"
+  ],
+  "problemas": 0
+}

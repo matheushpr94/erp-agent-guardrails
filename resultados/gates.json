@@ -1,0 +1,76 @@
+{
+  "gerado_em": "2026-11-06T01:45:30.770Z",
+  "node": "v22.23.2",
+  "gates": [
+    {
+      "gate": "escrita",
+      "modo": "normal",
+      "total": 16,
+      "passaram": 16,
+      "resultado": "passou"
+    },
+    {
+      "gate": "escrita",
+      "modo": "known-bad",
+      "total": 14,
+      "passaram": 11,
+      "resultado": "reprovou a sabotagem (ok)"
+    },
+    {
+      "gate": "proposta",
+      "modo": "normal",
+      "total": 12,
+      "passaram": 12,
+      "resultado": "passou"
+    },
+    {
+      "gate": "proposta",
+      "modo": "known-bad",
+      "total": 12,
+      "passaram": 3,
+      "resultado": "reprovou a sabotagem (ok)"
+    },
+    {
+      "gate": "papel",
+      "modo": "normal",
+      "total": 18,
+      "passaram": 18,
+      "resultado": "passou"
+    },
+    {
+      "gate": "papel",
+      "modo": "known-bad",
+      "total": 17,
+      "passaram": 13,
+      "resultado": "reprovou a sabotagem (ok)"
+    },
+    {
+      "gate": "confirmacao",
+      "modo": "normal",
+      "total": 37,
+      "passaram": 37,
+      "resultado": "passou"
+    },
+    {
+      "gate": "confirmacao",
+      "modo": "known-bad",
+      "total": 30,
+      "passaram": 18,
+      "resultado": "reprovou a sabotagem (ok)"
+    },
+    {
+      "gate": "integracao",
+      "modo": "normal",
+      "total": 18,
+      "passaram": 18,
+      "resultado": "passou"
+    },
+    {
+      "gate": "integracao",
+      "modo": "known-bad",
+      "total": 18,
+      "passaram": 17,
+      "resultado": "reprovou a sabotagem (ok)"
+    }
+  ]
+}
